@@ -12,7 +12,7 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+const db = getFirestore(app, "default");
 const auth = getAuth(app);
 
 async function test() {
@@ -21,16 +21,14 @@ async function test() {
     console.log("Auth success", user.user.uid);
     const docRef = doc(db, "vaults", "FAM-8842-KUTUMB");
     
-    // Try to read
-    const snap = await getDoc(docRef);
-    console.log("Read success. Data exists:", snap.exists());
-    if (snap.exists()) console.log(snap.data());
-    
+    // Try to write
+    console.log("Writing to 'default' database...");
+    await setDoc(docRef, { test: true });
+    console.log("Write success!");
     process.exit(0);
   } catch (e) {
     console.error("Firebase error", e);
     process.exit(1);
   }
 }
-
 test();
