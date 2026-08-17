@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, doc, setDoc, getDoc } from "firebase/firestore";
+import { getFirestore, collection, getDocs } from "firebase/firestore";
 import { getAuth, signInAnonymously } from "firebase/auth";
 
 const firebaseConfig = {
@@ -18,13 +18,10 @@ const auth = getAuth(app);
 async function test() {
   try {
     const user = await signInAnonymously(auth);
-    console.log("Auth success", user.user.uid);
-    const docRef = doc(db, "vaults", "FAM-8842-KUTUMB");
-    
-    // Try to write
-    console.log("Writing to 'default' database...");
-    await setDoc(docRef, { test: true });
-    console.log("Write success!");
+    const querySnapshot = await getDocs(collection(db, "vaults"));
+    querySnapshot.forEach((doc) => {
+      console.log(doc.id, " => ", Object.keys(doc.data()));
+    });
     process.exit(0);
   } catch (e) {
     console.error("Firebase error", e);

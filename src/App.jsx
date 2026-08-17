@@ -13,6 +13,7 @@ import RemindersView from './components/RemindersView';
 import WhatsAppModal from './components/WhatsAppModal';
 import ParentModeView from './components/ParentModeView';
 import SettingsModal from './components/SettingsModal';
+import UpdatePrompt from './components/UpdatePrompt';
 
 function MainApp() {
   const { settings } = useFinance();
@@ -130,6 +131,8 @@ function MainApp() {
         isOpen={!!whatsAppBorrower}
         onClose={() => setWhatsAppBorrower(null)}
       />
+
+      <UpdatePrompt />
 
     </div>
   );

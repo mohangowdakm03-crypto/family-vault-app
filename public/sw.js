@@ -1,9 +1,7 @@
 // Family Vault Finance — Service Worker (Offline-First PWA)
-const CACHE_NAME = 'family-vault-v1';
+const CACHE_NAME = 'family-vault-v2';
 const STATIC_ASSETS = [
   '/',
-  '/index.html',
-  '/manifest.webmanifest',
   '/favicon.svg',
   '/icon-192.png',
   '/icon-512.png'
@@ -69,4 +67,11 @@ self.addEventListener('fetch', (event) => {
         });
       })
   );
+});
+
+// Listen for SKIP_WAITING message
+self.addEventListener('message', (event) => {
+  if (event.data === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
 });
