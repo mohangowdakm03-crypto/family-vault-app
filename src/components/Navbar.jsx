@@ -40,21 +40,21 @@ export default function Navbar({ activeTab, setActiveTab, onOpenAddTransaction }
             
             {/* Ultra Premium Brand Logo */}
             <div className="flex items-center space-x-2 sm:space-x-3.5 cursor-pointer min-w-0 flex-1 mr-2" onClick={() => setActiveTab('dashboard')}>
-              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-tr from-indigo-500 via-purple-500 to-emerald-400 p-0.5 shadow-lg shadow-indigo-500/30 transition transform hover:scale-105">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-tr from-indigo-500 via-purple-500 to-emerald-400 p-0.5 shadow-lg shadow-indigo-500/30 transition transform hover:scale-105 shrink-0">
                 <div className="w-full h-full bg-slate-950 rounded-[14px] flex items-center justify-center">
                   <ShieldCheck className="w-5 h-5 sm:w-6 sm:h-6 text-indigo-400" />
                 </div>
               </div>
-              <div>
-                <div className="flex items-center space-x-1.5">
-                  <span className="font-black text-base sm:text-2xl tracking-tight text-white gradient-text-indigo truncate">
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center space-x-1.5 min-w-0">
+                  <span className="font-black text-base sm:text-2xl tracking-tight text-white gradient-text-indigo truncate block">
                     {t('appName')}
                   </span>
                   <span className="text-[8px] sm:text-[10px] uppercase font-black bg-gradient-to-r from-indigo-500/20 to-purple-500/20 text-indigo-300 border border-indigo-500/40 px-1.5 sm:px-2 py-0.5 rounded-full shadow-inner shrink-0 hidden xs:inline-block">
                     {t('appSubName')}
                   </span>
                 </div>
-                <p className="text-[10px] sm:text-xs text-slate-400 font-semibold hidden sm:block">Family Ledger & Debt Velocity Tracker</p>
+                <p className="text-[10px] sm:text-xs text-slate-400 font-semibold hidden sm:block truncate">Family Ledger & Debt Velocity Tracker</p>
               </div>
             </div>
 
