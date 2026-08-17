@@ -205,6 +205,10 @@ export function FinanceProvider({ children }) {
     setSettings(prev => ({ ...prev, language: newLang }));
   };
 
+  const updateSettings = (newSettings) => {
+    setSettings(prev => ({ ...prev, ...newSettings }));
+  };
+
   // Transaction Helpers
   const addTransaction = (tx) => {
     // FIX: Sanitize inputs — trim strings, ensure amount is positive number
@@ -418,6 +422,7 @@ export function FinanceProvider({ children }) {
       recordPartialRepayment,
       toggleParentMode,
       toggleLanguage,
+      updateSettings,
       updateCurrency,
       triggerCloudSync,
       clearAllData
