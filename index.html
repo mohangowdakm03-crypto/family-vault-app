@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="kn">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- FIX #11: Removed user-scalable=no and maximum-scale=1 to allow pinch-zoom for parents with eye problems -->
+    <!-- FIX #12: Added viewport-fit=cover for iPhone notch/island safe area inset support -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    
+    <title>Family Vault - ಕುಟುಂಬ ಫೈನಾನ್ಸ್ | Finance & Debt Tracker</title>
+    <meta name="description" content="Family finance management, income & expense ledger, loan & debt tracker, payback timeline analytics, and collection call reminders. ಕುಟುಂಬದ ಹಣಕಾಸು ನಿರ್ವಹಣೆ." />
+    
+    <!-- FIX #14: Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https:; connect-src 'self' https:;" />
+    
+    <!-- FIX #15: Referrer Policy — prevent leaking vault param to third-party font servers -->
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    
+    <!-- Theme & PWA -->
+    <meta name="theme-color" content="#030712" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    
+    <!-- FIX #13: iOS Safari PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="ಕುಟುಂಬ ಫೈನಾನ್ಸ್" />
+    <link rel="apple-touch-icon" href="/icon-192.png" />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- Google Fonts: Outfit (headings) + Inter (body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  </head>
+  <body class="bg-slate-950 text-slate-100 antialiased selection:bg-indigo-500 selection:text-white">
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
