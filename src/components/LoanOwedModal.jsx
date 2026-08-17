@@ -19,7 +19,11 @@ export default function LoanOwedModal({ isOpen, onClose }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!lenderName || !originalAmount) return;
+    const parsedAmount = Number(originalAmount);
+    if (!lenderName || !originalAmount || isNaN(parsedAmount) || parsedAmount <= 0) {
+      alert("Please enter a valid amount greater than 0.");
+      return;
+    }
 
     addLoanOwed({
       lenderName,

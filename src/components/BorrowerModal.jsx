@@ -21,7 +21,11 @@ export default function BorrowerModal({ isOpen, onClose }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!name || !totalLent) return;
+    const parsedAmount = Number(totalLent);
+    if (!name || !totalLent || isNaN(parsedAmount) || parsedAmount <= 0) {
+      alert("Please enter a valid amount greater than 0.");
+      return;
+    }
 
     addBorrower({
       name,

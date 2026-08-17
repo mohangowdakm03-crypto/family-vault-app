@@ -91,7 +91,11 @@ export default function TransactionModal({ isOpen, onClose, initialType = 'expen
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!amount) return;
+    const parsedAmount = Number(amount);
+    if (!amount || isNaN(parsedAmount) || parsedAmount <= 0) {
+      alert("Please enter a valid amount greater than 0.");
+      return;
+    }
     
     let finalCategory = category;
     let autoNotes = notes;
