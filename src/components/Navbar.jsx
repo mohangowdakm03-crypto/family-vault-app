@@ -86,39 +86,39 @@ export default function Navbar({ activeTab, setActiveTab, onOpenAddTransaction }
               {/* Dedicated Language Switcher */}
               <button
                 onClick={toggleLanguage}
-                className="flex items-center space-x-1.5 px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl text-xs font-black bg-gradient-to-r from-indigo-950 to-purple-950 border border-indigo-500/50 text-indigo-200 shadow-md hover:border-indigo-400 transition active:scale-95 btn-shimmer"
+                className="flex items-center space-x-1.5 px-2.5 py-2 sm:px-4 sm:py-2.5 rounded-xl text-xs font-black bg-gradient-to-r from-indigo-950 to-purple-950 border border-indigo-500/50 text-indigo-200 shadow-md hover:border-indigo-400 transition active:scale-95 btn-shimmer"
                 title="Switch Language (English / ಕನ್ನಡ)"
               >
-                <Globe className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-indigo-400" />
-                <span className="text-[11px] sm:text-xs">{settings.language === 'kn' ? '🌐 ಕನ್ನಡ' : '🌐 English'}</span>
+                <Globe className="w-4 h-4 text-indigo-400" />
+                <span className="hidden sm:inline text-xs">{settings.language === 'kn' ? 'ಕನ್ನಡ' : 'English'}</span>
               </button>
 
               {/* Sunlight Mode Toggle */}
               <button
                 onClick={toggleTheme}
-                className={`flex items-center space-x-1.5 px-3 py-2 sm:px-3.5 sm:py-2.5 rounded-xl text-xs font-black transition border active:scale-95 ${
+                className={`flex items-center space-x-1.5 px-2.5 py-2 sm:px-3.5 sm:py-2.5 rounded-xl text-xs font-black transition border active:scale-95 ${
                   settings.theme === 'light'
                     ? 'bg-amber-500/20 text-amber-500 border-amber-500/60 ring-2 ring-amber-500/30 shadow-lg'
                     : 'bg-slate-900/90 text-slate-300 border-slate-700/80 hover:bg-slate-800'
                 }`}
                 title="Toggle Sunlight Mode"
               >
-                {settings.theme === 'light' ? <Sun className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-500" /> : <Moon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-400" />}
-                <span className="text-[11px] sm:text-xs hidden lg:inline">{settings.theme === 'light' ? 'ಬೆಳಕು' : 'ಕತ್ತಲೆ'}</span>
+                {settings.theme === 'light' ? <Sun className="w-4 h-4 text-amber-500" /> : <Moon className="w-4 h-4 text-slate-400" />}
+                <span className="hidden lg:inline text-xs">{settings.theme === 'light' ? 'ಬೆಳಕು' : 'ಕತ್ತಲೆ'}</span>
               </button>
 
               {/* Senior Mode Toggle */}
               <button
                 onClick={toggleParentMode}
-                className={`flex items-center space-x-1.5 px-3 py-2 sm:px-3.5 sm:py-2.5 rounded-xl text-xs font-black transition border active:scale-95 ${
+                className={`flex items-center space-x-1.5 px-2.5 py-2 sm:px-3.5 sm:py-2.5 rounded-xl text-xs font-black transition border active:scale-95 ${
                   settings.parentMode
                     ? 'bg-amber-500/20 text-amber-300 border-amber-500/60 ring-2 ring-amber-500/30 shadow-lg'
                     : 'bg-slate-900/90 text-slate-300 border-slate-700/80 hover:bg-slate-800'
                 }`}
                 title="Toggle Senior Mode"
               >
-                <UserCheck className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400" />
-                <span className="text-[11px] sm:text-xs hidden md:inline">{settings.parentMode ? t('seniorModeOn') : t('seniorMode')}</span>
+                <UserCheck className="w-4 h-4 text-amber-400" />
+                <span className="hidden md:inline text-xs">{settings.parentMode ? t('seniorModeOn') : t('seniorMode')}</span>
               </button>
 
               {/* Quick Add Button */}
@@ -126,8 +126,8 @@ export default function Navbar({ activeTab, setActiveTab, onOpenAddTransaction }
                 onClick={onOpenAddTransaction}
                 className="flex items-center space-x-1.5 bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 hover:from-emerald-400 hover:to-teal-400 text-white px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl font-black text-xs sm:text-sm shadow-xl shadow-emerald-500/25 border border-emerald-400/40 transition active:scale-95 btn-shimmer"
               >
-                <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                <span className="text-[11px] sm:text-xs">{t('quickAdd')}</span>
+                <Sparkles className="w-4 h-4" />
+                <span className="hidden sm:inline text-xs">{t('quickAdd')}</span>
               </button>
 
               {/* Settings Tab */}
@@ -166,7 +166,7 @@ export default function Navbar({ activeTab, setActiveTab, onOpenAddTransaction }
                 }`}
               >
                 <Icon className={`w-5 h-5 mb-1 ${isActive ? 'text-indigo-400 scale-110' : 'text-slate-400'} transition-transform`} />
-                <span className="truncate w-full text-center leading-none text-[9.5px]">
+                <span className="w-full text-center leading-[1.1] text-[9.5px] break-words whitespace-normal px-0.5 mt-0.5">
                   {item.label}
                 </span>
               </button>
