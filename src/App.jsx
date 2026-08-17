@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { FinanceProvider, useFinance } from './context/FinanceContext';
+import { BrowserRouter, Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Dashboard from './components/Dashboard';
 import TransactionsList from './components/TransactionsList';
@@ -15,7 +16,9 @@ import SettingsModal from './components/SettingsModal';
 
 function MainApp() {
   const { settings } = useFinance();
-  const [activeTab, setActiveTab] = useState('dashboard');
+  const navigate = useNavigate();
+  const location = useLocation();
+  const activeTab = location.pathname.replace('/', '') || 'dashboard';
 
   // Modal States
   const [txModal, setTxModal] = useState({ isOpen: false, type: 'expense', category: null });
@@ -37,7 +40,7 @@ function MainApp() {
       {/* Header Navigation */}
       <Navbar 
         activeTab={activeTab} 
-        setActiveTab={setActiveTab}
+        setActiveTab={(tab) => navigate(`/${tab}`)}
         onOpenAddTransaction={() => openTxModal('expense')}
       />
 
@@ -50,52 +53,56 @@ function MainApp() {
             onOpenAddTransaction={openTxModal}
             onOpenAddBorrower={() => setIsBorrowerModalOpen(true)}
             onOpenAddDebt={() => setIsLoanOwedModalOpen(true)}
-            setActiveTab={setActiveTab}
+            setActiveTab={(tab) => navigate(`/${tab}`)}
           />
         ) : (
-          <>
-            {activeTab === 'dashboard' && (
+          <Routes>
+            <Route path="/" element={<Navigate to="/dashboard" replace />} />
+            
+            <Route path="/dashboard" element={
               <Dashboard 
-                setActiveTab={setActiveTab}
+                setActiveTab={(tab) => navigate(`/${tab}`)}
                 onOpenAddTransaction={openTxModal}
                 onOpenAddBorrower={() => setIsBorrowerModalOpen(true)}
                 onOpenAddDebt={() => setIsLoanOwedModalOpen(true)}
                 onOpenWhatsAppModal={(b) => setWhatsAppBorrower(b)}
               />
-            )}
+            } />
 
-            {activeTab === 'transactions' && (
+            <Route path="/transactions" element={
               <TransactionsList 
                 onOpenAddModal={openTxModal}
               />
-            )}
+            } />
 
-            {activeTab === 'loans-owed' && (
+            <Route path="/loans-owed" element={
               <LoansOwed 
                 onOpenAddLoanModal={() => setIsLoanOwedModalOpen(true)}
               />
-            )}
+            } />
 
-            {activeTab === 'loans-lent' && (
+            <Route path="/loans-lent" element={
               <LoansLent 
                 onOpenAddBorrower={() => setIsBorrowerModalOpen(true)}
                 onOpenWhatsAppModal={(b) => setWhatsAppBorrower(b)}
               />
-            )}
+            } />
 
-            {activeTab === 'reminders' && (
+            <Route path="/reminders" element={
               <RemindersView 
                 onOpenWhatsAppModal={(b) => setWhatsAppBorrower(b)}
               />
-            )}
+            } />
 
-            {activeTab === 'settings' && (
+            <Route path="/settings" element={
               <SettingsModal 
                 isOpen={true} 
-                onClose={() => setActiveTab('dashboard')} 
+                onClose={() => navigate('/dashboard')} 
               />
-            )}
-          </>
+            } />
+
+            <Route path="*" element={<Navigate to="/dashboard" replace />} />
+          </Routes>
         )}
 
       </main>
@@ -130,8 +137,10 @@ function MainApp() {
 
 export default function App() {
   return (
-    <FinanceProvider>
-      <MainApp />
-    </FinanceProvider>
+    <BrowserRouter>
+      <FinanceProvider>
+        <MainApp />
+      </FinanceProvider>
+    </BrowserRouter>
   );
 }
