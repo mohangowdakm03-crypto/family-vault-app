@@ -265,10 +265,25 @@ export default function Dashboard({ setActiveTab, onOpenAddTransaction, onOpenAd
               <div className="h-56 sm:h-64 w-full">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={cashflowData}>
-                    <XAxis dataKey="name" stroke="#94a3b8" fontSize={11} tickLine={false} />
-                    <YAxis stroke="#94a3b8" fontSize={11} tickLine={false} />
+                    <XAxis 
+                      dataKey="name" 
+                      stroke={settings?.theme === 'light' ? '#94a3b8' : '#334155'} 
+                      tick={{ fill: settings?.theme === 'light' ? '#475569' : '#e2e8f0', fontSize: 12, fontWeight: 600 }}
+                      tickLine={false} 
+                    />
+                    <YAxis 
+                      stroke={settings?.theme === 'light' ? '#94a3b8' : '#334155'} 
+                      tick={{ fill: settings?.theme === 'light' ? '#475569' : '#e2e8f0', fontSize: 12, fontWeight: 600 }}
+                      tickLine={false} 
+                    />
                     <Tooltip 
-                      contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', borderRadius: '12px', color: '#fff' }}
+                      contentStyle={{ 
+                        backgroundColor: settings?.theme === 'light' ? '#ffffff' : '#0f172a', 
+                        borderColor: settings?.theme === 'light' ? '#e2e8f0' : '#334155', 
+                        borderRadius: '12px'
+                      }}
+                      itemStyle={{ color: settings?.theme === 'light' ? '#0f172a' : '#f8fafc', fontWeight: 'bold' }}
+                      labelStyle={{ color: settings?.theme === 'light' ? '#64748b' : '#94a3b8' }}
                       formatter={(value) => [`${currency}${value.toLocaleString()}`, 'Amount']}
                     />
                     <Bar dataKey="amount" radius={[8, 8, 0, 0]} />
@@ -308,7 +323,13 @@ export default function Dashboard({ setActiveTab, onOpenAddTransaction, onOpenAd
                       ))}
                     </Pie>
                     <Tooltip 
-                      contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', borderRadius: '12px', color: '#fff' }}
+                      contentStyle={{ 
+                        backgroundColor: settings?.theme === 'light' ? '#ffffff' : '#0f172a', 
+                        borderColor: settings?.theme === 'light' ? '#e2e8f0' : '#334155', 
+                        borderRadius: '12px'
+                      }}
+                      itemStyle={{ color: settings?.theme === 'light' ? '#0f172a' : '#f8fafc', fontWeight: 'bold' }}
+                      labelStyle={{ color: settings?.theme === 'light' ? '#64748b' : '#94a3b8' }}
                       formatter={(value) => [`${currency}${value.toLocaleString()}`, 'Spent']}
                     />
                   </PieChart>
