@@ -16,13 +16,26 @@ export default function TransactionModal({ isOpen, onClose, initialType = 'expen
   const [receiptSimulated, setReceiptSimulated] = useState(false);
 
   useEffect(() => {
-    if (initialCategory) {
-      setCategory(initialCategory);
-      if (initialCategory === 'Allowance') {
-        setTitle(settings.language === 'kn' ? 'ಮೋಹನ್ ಗೌಡ / ವೇದಾವತಿ ಪಾಕೆಟ್ ಮನಿ' : 'Mohan Gowda / Vedavathi Allowance');
+    if (isOpen) {
+      setType(initialType);
+      setTitle('');
+      setAmount('');
+      setMember('MohanGowda');
+      setPaymentMethod('UPI');
+      setDate(new Date().toISOString().split('T')[0]);
+      setNotes('');
+      setReceiptSimulated(false);
+      
+      if (initialCategory) {
+        setCategory(initialCategory);
+        if (initialCategory === 'Allowance') {
+          setTitle(settings.language === 'kn' ? 'ಮೋಹನ್ ಗೌಡ / ವೇದಾವತಿ ಪಾಕೆಟ್ ಮನಿ' : 'Mohan Gowda / Vedavathi Allowance');
+        }
+      } else {
+        setCategory('Groceries');
       }
     }
-  }, [initialCategory, settings.language]);
+  }, [isOpen, initialType, initialCategory, settings.language]);
 
   if (!isOpen) return null;
 
