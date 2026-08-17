@@ -32,7 +32,7 @@ function MainApp() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100">
+    <div className="min-h-screen w-full overflow-x-hidden flex flex-col bg-slate-950 text-slate-100">
       
       {/* Header Navigation */}
       <Navbar 

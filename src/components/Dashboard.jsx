@@ -113,8 +113,8 @@ export default function Dashboard({ setActiveTab, onOpenAddTransaction, onOpenAd
         {/* Net Balance Card */}
         <div className="glass-card rounded-2xl p-5 sm:p-6 relative overflow-hidden flex flex-col justify-between border border-indigo-500/25">
           <div className="flex items-center justify-between">
-            <span className="text-sm font-bold uppercase tracking-wider text-slate-300">{t('totalNetBalance')}</span>
-            <div className="p-3 bg-indigo-500/20 border border-indigo-500/30 rounded-xl">
+            <span className="text-sm font-bold uppercase tracking-wider text-slate-300 break-words whitespace-normal leading-tight pr-2">{t('totalNetBalance')}</span>
+            <div className="p-3 bg-indigo-500/20 border border-indigo-500/30 rounded-xl shrink-0">
               <Wallet className="w-6 h-6 text-indigo-400" />
             </div>
           </div>
@@ -136,8 +136,8 @@ export default function Dashboard({ setActiveTab, onOpenAddTransaction, onOpenAd
         {/* Monthly Income Card */}
         <div className="glass-card rounded-2xl p-5 sm:p-6 relative overflow-hidden flex flex-col justify-between border border-emerald-500/25">
           <div className="flex items-center justify-between">
-            <span className="text-sm font-bold uppercase tracking-wider text-slate-300">{t('totalEarnings')}</span>
-            <div className="p-3 bg-emerald-500/20 border border-emerald-500/30 rounded-xl">
+            <span className="text-sm font-bold uppercase tracking-wider text-slate-300 break-words whitespace-normal leading-tight pr-2">{t('totalEarnings')}</span>
+            <div className="p-3 bg-emerald-500/20 border border-emerald-500/30 rounded-xl shrink-0">
               <TrendingUp className="w-6 h-6 text-emerald-400" />
             </div>
           </div>
@@ -153,8 +153,8 @@ export default function Dashboard({ setActiveTab, onOpenAddTransaction, onOpenAd
         {/* Debts We Owe Card */}
         <div className="glass-card rounded-2xl p-5 sm:p-6 relative overflow-hidden flex flex-col justify-between border border-amber-500/25">
           <div className="flex items-center justify-between">
-            <span className="text-sm font-bold uppercase tracking-wider text-slate-300">{t('debtsOwedToPay')}</span>
-            <div className="p-3 bg-amber-500/20 border border-amber-500/30 rounded-xl">
+            <span className="text-sm font-bold uppercase tracking-wider text-slate-300 break-words whitespace-normal leading-tight pr-2">{t('debtsOwedToPay')}</span>
+            <div className="p-3 bg-amber-500/20 border border-amber-500/30 rounded-xl shrink-0">
               <Landmark className="w-6 h-6 text-amber-400" />
             </div>
           </div>
@@ -170,8 +170,8 @@ export default function Dashboard({ setActiveTab, onOpenAddTransaction, onOpenAd
         {/* Money Lent Card */}
         <div className="glass-card rounded-2xl p-5 sm:p-6 relative overflow-hidden flex flex-col justify-between border border-purple-500/25">
           <div className="flex items-center justify-between">
-            <span className="text-sm font-bold uppercase tracking-wider text-slate-300">{t('moneyLentPending')}</span>
-            <div className="p-3 bg-purple-500/20 border border-purple-500/30 rounded-xl">
+            <span className="text-sm font-bold uppercase tracking-wider text-slate-300 break-words whitespace-normal leading-tight pr-2">{t('moneyLentPending')}</span>
+            <div className="p-3 bg-purple-500/20 border border-purple-500/30 rounded-xl shrink-0">
               <HandCoins className="w-6 h-6 text-purple-400" />
             </div>
           </div>

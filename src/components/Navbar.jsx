@@ -39,7 +39,7 @@ export default function Navbar({ activeTab, setActiveTab, onOpenAddTransaction }
           <div className="flex items-center justify-between h-16 sm:h-20">
             
             {/* Ultra Premium Brand Logo */}
-            <div className="flex items-center space-x-2.5 sm:space-x-3.5 cursor-pointer shrink-0" onClick={() => setActiveTab('dashboard')}>
+            <div className="flex items-center space-x-2 sm:space-x-3.5 cursor-pointer min-w-0 flex-1 mr-2" onClick={() => setActiveTab('dashboard')}>
               <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-tr from-indigo-500 via-purple-500 to-emerald-400 p-0.5 shadow-lg shadow-indigo-500/30 transition transform hover:scale-105">
                 <div className="w-full h-full bg-slate-950 rounded-[14px] flex items-center justify-center">
                   <ShieldCheck className="w-5 h-5 sm:w-6 sm:h-6 text-indigo-400" />
@@ -47,10 +47,10 @@ export default function Navbar({ activeTab, setActiveTab, onOpenAddTransaction }
               </div>
               <div>
                 <div className="flex items-center space-x-1.5">
-                  <span className="font-black text-lg sm:text-2xl tracking-tight text-white gradient-text-indigo">
+                  <span className="font-black text-base sm:text-2xl tracking-tight text-white gradient-text-indigo truncate">
                     {t('appName')}
                   </span>
-                  <span className="text-[9px] sm:text-[10px] uppercase font-black bg-gradient-to-r from-indigo-500/20 to-purple-500/20 text-indigo-300 border border-indigo-500/40 px-2 py-0.5 rounded-full shadow-inner">
+                  <span className="text-[8px] sm:text-[10px] uppercase font-black bg-gradient-to-r from-indigo-500/20 to-purple-500/20 text-indigo-300 border border-indigo-500/40 px-1.5 sm:px-2 py-0.5 rounded-full shadow-inner shrink-0 hidden xs:inline-block">
                     {t('appSubName')}
                   </span>
                 </div>
