@@ -45,20 +45,20 @@ export default function TransactionModal({ isOpen, onClose, initialType = 'expen
     }
   }, [isOpen, initialType, initialCategory, settings.language]);
 
+  // Reset category if type switches and a dynamic loan category is selected
+  useEffect(() => {
+    if (type === 'expense' && category?.startsWith('borrower_')) {
+      setCategory('Groceries');
+    } else if (type === 'income' && category?.startsWith('debt_')) {
+      setCategory('Salary');
+    }
+  }, [type, category]);
+
   if (!isOpen) return null;
 
   const staticCategories = ['Allowance', 'Groceries', 'Utilities', 'Salary', 'Business', 'Healthcare', 'Education', 'Entertainment', 'Shopping', 'Miscellaneous', 'Milk', 'Cowdung', 'Crops', 'CattleFeed'];
   const members = ['MohanGowda', 'Vedavathi', 'Father', 'Mother', 'Self', 'Spouse', 'Sibling'];
   const paymentMethods = ['UPI', 'Cash', 'BankTransfer', 'DebitCard', 'CreditCard'];
-
-  // Reset category if type switches and a dynamic loan category is selected
-  useEffect(() => {
-    if (type === 'expense' && category.startsWith('borrower_')) {
-      setCategory('Groceries');
-    } else if (type === 'income' && category.startsWith('debt_')) {
-      setCategory('Salary');
-    }
-  }, [type]);
 
   const getDynamicCategoryGroups = () => {
     const groups = [];
