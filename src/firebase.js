@@ -3,12 +3,12 @@ import { getFirestore } from "firebase/firestore";
 import { getAuth, signInAnonymously } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDSNQYnf7w5r-sc_lRxdnpaFJ0P7wXpbO4",
+  apiKey: "AIzaSyDSNQYnf7w5r-sc_1RxdnpaFJ0P7wXpb04",
   authDomain: "family-vault-32e73.firebaseapp.com",
   projectId: "family-vault-32e73",
   storageBucket: "family-vault-32e73.firebasestorage.app",
-  messagingSenderId: "913418545310",
-  appId: "1:913418545310:web:a5c870d09cfe84a53c2c67"
+  messagingSenderId: "913418545318",
+  appId: "1:913418545318:web:a5c870d09cfe84a53c2c67"
 };
 
 const app = initializeApp(firebaseConfig);

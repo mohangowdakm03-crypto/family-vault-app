@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { translations } from '../i18n/translations';
 import { db } from '../firebase';
-import { doc, onSnapshot, setDoc } from 'firebase/firestore';
+import { doc, onSnapshot, setDoc, getDoc } from 'firebase/firestore';
 
 const FinanceContext = createContext();
 
@@ -50,6 +50,8 @@ export function FinanceProvider({ children }) {
   const [borrowers, setBorrowers] = useState(() => safeJsonParse('kv_v3_borrowers', []));
   const [settings, setSettings] = useState(() => safeJsonParse('kv_v3_settings', DEFAULT_SETTINGS));
   const [callReminders, setCallReminders] = useState(() => safeJsonParse('kv_v3_reminders', []));
+
+  const isDataInitialized = React.useRef(false);
 
   // Check URL params for PWA language or vault ID override
   useEffect(() => {
@@ -109,6 +111,8 @@ export function FinanceProvider({ children }) {
     if (!settings.familyVaultId) return;
 
     const unsub = onSnapshot(doc(db, "vaults", settings.familyVaultId), (docSnap) => {
+      isDataInitialized.current = true;
+      
       if (docSnap.exists() && !docSnap.metadata.hasPendingWrites) {
         const data = docSnap.data();
         window.__preventSync = true;
@@ -120,6 +124,13 @@ export function FinanceProvider({ children }) {
         
         // Let React finish re-rendering before allowing outgoing syncs again
         setTimeout(() => { window.__preventSync = false; }, 500);
+      } else if (!docSnap.exists()) {
+        // First time connecting to a new Firebase database? Push local data to cloud if we have any!
+        if (transactions.length > 0 || loansOwed.length > 0 || borrowers.length > 0) {
+          setDoc(doc(db, "vaults", settings.familyVaultId), { 
+            transactions, loansOwed, borrowers, callReminders 
+          }, { merge: true }).catch(console.error);
+        }
       }
     }, (err) => {
       console.error("Firebase sync error:", err);
@@ -132,21 +143,21 @@ export function FinanceProvider({ children }) {
   // Save changes to local storage v3 keys AND Firebase
   useEffect(() => {
     try { localStorage.setItem('kv_v3_transactions', JSON.stringify(transactions)); } catch (e) {}
-    if (settings.familyVaultId && window.__preventSync !== true) {
+    if (settings.familyVaultId && window.__preventSync !== true && isDataInitialized.current) {
       setDoc(doc(db, "vaults", settings.familyVaultId), { transactions }, { merge: true }).catch(console.error);
     }
   }, [transactions, settings.familyVaultId]);
 
   useEffect(() => {
     try { localStorage.setItem('kv_v3_loans_owed', JSON.stringify(loansOwed)); } catch (e) {}
-    if (settings.familyVaultId && window.__preventSync !== true) {
+    if (settings.familyVaultId && window.__preventSync !== true && isDataInitialized.current) {
       setDoc(doc(db, "vaults", settings.familyVaultId), { loansOwed }, { merge: true }).catch(console.error);
     }
   }, [loansOwed, settings.familyVaultId]);
 
   useEffect(() => {
     try { localStorage.setItem('kv_v3_borrowers', JSON.stringify(borrowers)); } catch (e) {}
-    if (settings.familyVaultId && window.__preventSync !== true) {
+    if (settings.familyVaultId && window.__preventSync !== true && isDataInitialized.current) {
       setDoc(doc(db, "vaults", settings.familyVaultId), { borrowers }, { merge: true }).catch(console.error);
     }
   }, [borrowers, settings.familyVaultId]);
@@ -174,7 +185,7 @@ export function FinanceProvider({ children }) {
 
   useEffect(() => {
     try { localStorage.setItem('kv_v3_reminders', JSON.stringify(callReminders)); } catch (e) {}
-    if (settings.familyVaultId && window.__preventSync !== true) {
+    if (settings.familyVaultId && window.__preventSync !== true && isDataInitialized.current) {
       setDoc(doc(db, "vaults", settings.familyVaultId), { callReminders }, { merge: true }).catch(console.error);
     }
   }, [callReminders, settings.familyVaultId]);
