@@ -59,7 +59,7 @@ export default function Navbar({ activeTab, setActiveTab, onOpenAddTransaction }
             </div>
 
             {/* Desktop Navigation Tabs */}
-            <nav className="hidden lg:flex items-center space-x-1 bg-slate-900/90 p-1.5 rounded-2xl border border-slate-800/90 shadow-inner">
+            <nav className="hidden xl:flex items-center space-x-1 bg-slate-900/90 p-1.5 rounded-2xl border border-slate-800/90 shadow-inner">
               {navItems.map((item) => {
                 const Icon = item.icon;
                 const isActive = activeTab === item.id;
@@ -67,14 +67,14 @@ export default function Navbar({ activeTab, setActiveTab, onOpenAddTransaction }
                   <button
                     key={item.id}
                     onClick={() => setActiveTab(item.id)}
-                    className={`flex items-center space-x-2 px-4 py-2.5 rounded-xl font-bold text-sm transition-all duration-300 ${
+                    className={`flex items-center space-x-1.5 px-3 py-2 rounded-xl font-bold text-xs transition-all duration-300 ${
                       isActive 
                         ? 'bg-gradient-to-r from-indigo-600 via-indigo-700 to-purple-600 text-white shadow-lg shadow-indigo-600/40 border border-indigo-400/30' 
                         : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
                     }`}
                   >
                     <Icon className={`w-4 h-4 ${isActive ? 'text-white' : 'text-slate-400'}`} />
-                    <span>{item.label}</span>
+                    <span className="whitespace-nowrap">{item.label}</span>
                   </button>
                 );
               })}
@@ -150,7 +150,7 @@ export default function Navbar({ activeTab, setActiveTab, onOpenAddTransaction }
       </header>
 
       {/* Ultra Premium Mobile Bottom Navigation Bar */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-slate-950/95 backdrop-blur-2xl border-t border-slate-800/90 py-2 px-2 shadow-2xl">
+      <div className="xl:hidden fixed bottom-0 left-0 right-0 z-50 bg-slate-950/95 backdrop-blur-2xl border-t border-slate-800/90 py-2 px-2 shadow-2xl">
         <div className="grid grid-cols-5 gap-1 max-w-md mx-auto">
           {navItems.map((item) => {
             const Icon = item.icon;
