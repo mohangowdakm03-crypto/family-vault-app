@@ -3,7 +3,15 @@ import { useFinance } from '../context/FinanceContext';
 import { X, Upload, Check } from 'lucide-react';
 
 export default function TransactionModal({ isOpen, onClose, initialType = 'expense', initialCategory = null }) {
-  const { t, addTransaction, settings } = useFinance();
+  const { 
+    t, 
+    addTransaction, 
+    settings,
+    loansOwed,
+    borrowers,
+    recordLoanOwedPayment,
+    recordPartialRepayment
+  } = useFinance();
   
   const [type, setType] = useState(initialType);
   const [title, setTitle] = useState('');
@@ -39,25 +47,90 @@ export default function TransactionModal({ isOpen, onClose, initialType = 'expen
 
   if (!isOpen) return null;
 
-  const categories = ['Allowance', 'Groceries', 'Utilities', 'Salary', 'Business', 'Healthcare', 'Education', 'Entertainment', 'Shopping', 'Miscellaneous', 'Milk', 'Cowdung', 'Crops', 'CattleFeed'];
+  const staticCategories = ['Allowance', 'Groceries', 'Utilities', 'Salary', 'Business', 'Healthcare', 'Education', 'Entertainment', 'Shopping', 'Miscellaneous', 'Milk', 'Cowdung', 'Crops', 'CattleFeed'];
   const members = ['MohanGowda', 'Vedavathi', 'Father', 'Mother', 'Self', 'Spouse', 'Sibling'];
   const paymentMethods = ['UPI', 'Cash', 'BankTransfer', 'DebitCard', 'CreditCard'];
+
+  // Reset category if type switches and a dynamic loan category is selected
+  useEffect(() => {
+    if (type === 'expense' && category.startsWith('borrower_')) {
+      setCategory('Groceries');
+    } else if (type === 'income' && category.startsWith('debt_')) {
+      setCategory('Salary');
+    }
+  }, [type]);
+
+  const getDynamicCategoryGroups = () => {
+    const groups = [];
+    groups.push({ 
+      label: 'Standard Categories',
+      items: staticCategories.map(c => ({ value: c, label: t(`categories.${c}`) || c }))
+    });
+    
+    if (type === 'expense') {
+      const activeDebts = loansOwed?.filter(l => l.status === 'Active' || l.status === 'Overdue') || [];
+      if (activeDebts.length > 0) {
+        groups.push({ 
+          label: 'Pay Debts We Owe',
+          items: activeDebts.map(l => ({ value: `debt_${l.id}`, label: `Pay Debt: ${l.lenderName}` }))
+        });
+      }
+    } else if (type === 'income') {
+      const activeBorrowers = borrowers?.filter(b => b.status === 'Active' || b.status === 'Overdue') || [];
+      if (activeBorrowers.length > 0) {
+        groups.push({ 
+          label: 'Collect Money Lent',
+          items: activeBorrowers.map(b => ({ value: `borrower_${b.id}`, label: `Receive: ${b.name}` }))
+        });
+      }
+    }
+    return groups;
+  };
+
+  const dynamicCategoryGroups = getDynamicCategoryGroups();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!amount) return;
     
-    const finalTitle = title.trim() || t(`categories.${category}`);
+    let finalCategory = category;
+    let autoNotes = notes;
+    let finalTitle = title.trim();
+    
+    // Process Special Categories (Loan Syncing)
+    if (category.startsWith('debt_')) {
+      const loanId = category.split('_')[1];
+      const loan = loansOwed.find(l => l.id === loanId);
+      if (loan) {
+        recordLoanOwedPayment(loanId, Number(amount), notes || 'Repayment logged via main modal');
+        finalCategory = 'Debt Repayment';
+        autoNotes = notes ? `[Repayment for ${loan.lenderName}] ${notes}` : `Repayment for ${loan.lenderName}`;
+        finalTitle = title.trim() || `Repaid: ${loan.lenderName}`;
+      }
+    } else if (category.startsWith('borrower_')) {
+      const borrowerId = category.split('_')[1];
+      const borrower = borrowers.find(b => b.id === borrowerId);
+      if (borrower) {
+        recordPartialRepayment(borrowerId, Number(amount), notes || 'Collection logged via main modal');
+        finalCategory = 'Loan Repayment Received';
+        autoNotes = notes ? `[Collection from ${borrower.name}] ${notes}` : `Collection from ${borrower.name}`;
+        finalTitle = title.trim() || `Collected from: ${borrower.name}`;
+      }
+    }
+
+    if (!finalTitle) {
+      finalTitle = t(`categories.${finalCategory}`) || finalCategory;
+    }
 
     addTransaction({
       type,
       title: finalTitle,
       amount: Number(amount),
-      category,
+      category: finalCategory,
       member,
       paymentMethod,
       date,
-      notes: receiptSimulated ? `${notes} [Receipt Attached]` : notes
+      notes: receiptSimulated ? `${autoNotes} [Receipt Attached]` : autoNotes
     });
 
     onClose();
@@ -153,7 +226,13 @@ export default function TransactionModal({ isOpen, onClose, initialType = 'expen
                 onChange={(e) => setCategory(e.target.value)}
                 className="w-full px-3 py-3 rounded-xl glass-input text-xs sm:text-sm cursor-pointer"
               >
-                {categories.map(c => <option key={c} value={c}>{t(`categories.${c}`)}</option>)}
+                {dynamicCategoryGroups.map((group, gIdx) => (
+                  <optgroup key={gIdx} label={`--- ${group.label} ---`}>
+                    {group.items.map(item => (
+                      <option key={item.value} value={item.value}>{item.label}</option>
+                    ))}
+                  </optgroup>
+                ))}
               </select>
             </div>
 
